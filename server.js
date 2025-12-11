@@ -66,7 +66,7 @@ wss.on('connection', (ws) => {
       const pair = getOrCreatePair(pairId);
       pair.users.set(userId, { ws, displayName });
 
-      const history = pair.history.slice(-50);
+      const history = pair.history.slice(-100);
 
       ws.send(JSON.stringify({
         type: 'welcome',
@@ -97,17 +97,27 @@ wss.on('connection', (ws) => {
     }
 
     if (msg.type === 'chat') {
-      const text = String(msg.text || '').trim();
-      if (!text) return;
+      const rawText = String(msg.text || '');
+      const text = rawText.trim();
+      const hasImage = typeof msg.image === 'string' && msg.image.startsWith('data:image');
+
+      if (!text && !hasImage) {
+        return;
+      }
+
       const now = new Date();
       const message = {
         id: msg.clientMsgId || `${now.getTime()}_${Math.floor(Math.random() * 1000)}`,
         type: 'chat',
         pairId,
         from: userId,
-        text,
+        text: text || (hasImage ? '[image]' : ''),
         time: now.toISOString()
       };
+
+      if (hasImage) {
+        message.image = msg.image;
+      }
 
       const pair = getOrCreatePair(pairId);
       pair.history.push(message);

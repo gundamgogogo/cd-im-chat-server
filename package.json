@@ -1,7 +1,7 @@
 {
   "name": "cd-im-chat-server",
-  "version": "1.0.0",
-  "description": "Simple 1-to-1 WebSocket chat server for a browser extension.",
+  "version": "1.1.0",
+  "description": "Simple 1-to-1 WebSocket chat server for a browser extension (with optional images).",
   "main": "server.js",
   "type": "module",
   "scripts": {
