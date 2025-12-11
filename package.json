@@ -1,0 +1,13 @@
+{
+  "name": "cd-im-chat-server",
+  "version": "1.0.0",
+  "description": "Simple 1-to-1 WebSocket chat server for a browser extension.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
